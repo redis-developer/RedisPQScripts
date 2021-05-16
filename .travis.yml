@@ -1,0 +1,12 @@
+language: c
+
+services:
+  - redis-server
+
+addons:
+  apt:
+    packages:
+	- lua5.3
+
+script:
+  - ./basic_test.sh
