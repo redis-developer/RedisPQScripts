@@ -3,10 +3,9 @@ language: c
 services:
   - redis-server
 
-addons:
-  apt:
-    packages:
-	- lua5.3
+before_install:
+  - sudo apt-get update
+  - sudo apt-get install lua5.3
 
 script:
-  - ./basic_test.sh
+  - bash ./basic_test.sh

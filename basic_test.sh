@@ -1,5 +1,21 @@
-#!/bin/bash
+redis-cli FLUSHALL
 
-CMDA = `redis-cli eval "$(cat ./add.lua)" 2 MYAPP 100 && redis-cli eval "$(cat ./add.lua)" 2 MYAPP 100 && redis-cli eval "$(cat ./add.lua)" 2 MYAPP 1000 && redis-cli eval "$(cat ./add.lua)" 2 MYAPP 10 && redis-cli eval "$(cat ./add.lua)" 2 MYAPP 10000 && redis-cli eval "$(cat ./add.lua)" 2 MYAPP 10000 && redis-cli eval "$(cat ./remove.lua)" 2 MYAPP 1 && redis-cli eval "$(cat ./remove.lua)" 2 MYAPP 1 && for i in {1..8}; do redis-cli eval "$(cat ./remove.lua)" 2 MYAPP 0; done`
+for i in 100 100 1000 10 10000 10000; do
+        redis-cli eval "$(cat ./add.lua)" 2 MYAPP "$i"
+done
 
-echo "$CMDA"
+for i in {1..2}; do
+        cmd="$(redis-cli eval "$(cat ./remove.lua)" 2 MYAPP 1)"
+        echo $cmd
+        if [[ $cmd != "10000" ]] ; then
+                exit 1
+        fi
+done
+
+for i in "10000" "10000" "1000" "100" "100" "10"; do
+        cmd="$(redis-cli eval "$(cat ./remove.lua)" 2 MYAPP 0)"
+        echo $cmd
+        if [[ $cmd != $i ]] ; then
+                exit 1
+        fi
+done
