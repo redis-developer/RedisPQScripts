@@ -1,11 +1,12 @@
 language: c
 
 services:
-  - redis-server
+  - docker
 
 before_install:
   - sudo apt-get update
   - sudo apt-get install lua5.3
+  - sudo docker run -p 6379:6379 --name redis-redisjson redislabs/rejson:latest &  
 
 script:
-  - bash ./basic_test.sh
+  - sudo bash ./basic_test.sh
