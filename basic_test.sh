@@ -1,4 +1,4 @@
-sleep 5
+sleep 20
 
 redis-cli FLUSHALL
 
