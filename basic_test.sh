@@ -1,3 +1,5 @@
+sleep 5
+
 redis-cli FLUSHALL
 
 for i in 100 100 1000 10 10000 10000; do
