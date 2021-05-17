@@ -14,14 +14,6 @@ local dollarize = function (num)
         return '$' .. tostring(num)
 end
 
-local list_at = function (index)
-        '[' .. tostring(index) .. ']'
-end
-
-local counter_at = function (key)
-        return counter .. key
-end
-
 local sift_up = function (val, index)
         local parent_index = math.floor(index / 2)
         local parent_val = tonumber(redis.call('JSON.GET', list, parent_index))
